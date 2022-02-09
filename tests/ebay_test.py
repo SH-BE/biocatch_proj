@@ -22,7 +22,7 @@ class Test_ebay:
         home_page.choose_category('Books')
         home_page.search('Harry Potter')
         searched_items.set_max_price(100)
-        cart_val = searched_items.add_to_cart_until_amount(100)
+        cart_val = searched_items.add_to_cart_until_amount(500)
         searched_items.go_to_checkout()
         assert checkout.is_url_checkout(), "web page is not checkout page"
         assert cart_val == checkout.get_checkout_amount(), "checkout amount is not correct"
