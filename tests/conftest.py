@@ -1,17 +1,20 @@
 import os
-
 import pytest as pytest
 from selenium import webdriver
 
+
+def set_chrome_options():
+    options = webdriver.ChromeOptions()
+    # to make the automation undetectable
+    options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    return options
+
+
 @pytest.fixture(scope="class")
 def setup(request):
-    path = os.path.abspath(os.path.dirname(__file__))
-    file = os.path.join(path, "../assets/chromedriver")
-    driver = webdriver.Chrome(executable_path=file)
+    path = os.path.join(os.path.dirname(os.path.abspath('')), 'assets\\chromedriver.exe')
+    driver = webdriver.Chrome(executable_path=path, chrome_options=set_chrome_options())
     driver.maximize_window()
-    driver.get('https://www.ebay.com/')
-    driver.implicitly_wait(10)
     request.cls.driver = driver
     yield
-    driver.close()
     driver.quit()
